@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements-ci.txt
+          pip install -r requirements.txt
 
       - name: Run unit tests
         run: pytest tests/unit/ -v --cov=app --cov-report=term
@@ -63,7 +63,7 @@ jobs:
 
       - name: Determine and create new version tag
         id: tag-version
-        run: python util/version_manager.py --update-tags
+        run: python version_manager.py --update-tags
 
       - name: Check if image exists
         id: check-image

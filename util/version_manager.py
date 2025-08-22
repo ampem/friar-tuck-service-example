@@ -1,6 +1,7 @@
 import subprocess
 import sys
 import argparse
+import os
 
 def get_latest_tag():
     try:
@@ -60,7 +61,9 @@ if __name__ == "__main__":
     elif args.update_tags:
         try:
             version = get_version(args.update_tags)
-            print(f"VERSION={version}")
+            # Write output to GITHUB_OUTPUT for GitHub Actions
+            with open(os.environ.get('GITHUB_OUTPUT', 'output.txt'), 'a') as fh:
+                print(f"VERSION={version}", file=fh)
         except ValueError as e:
             print(f"Error: {e}", file=sys.stderr)
             sys.exit(1)
