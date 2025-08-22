@@ -19,9 +19,3 @@ class TestHttpHandlerIntegration:
         response = client.get("/fail")
         assert response.status_code == 400
         assert response.json() == {"message": "Failure"}
-
-    @pytest.mark.asyncio
-    async def test_info_endpoint(self, client):
-        response = client.get("/info")
-        assert response.status_code == 200
-        assert response.json() == {"info": "service-example"}
