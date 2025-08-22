@@ -66,12 +66,9 @@ jobs:
         id: tag-version
         run: |
           # Get the latest tag or use fallback
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.1.0")
-          # Extract version parts (e.g., v1.0.0 -> 1.0.0)
-          VERSION_PARTS=(${LATEST_TAG//v/})
-          MAJOR=${VERSION_PARTS[0]}
-          MINOR=${VERSION_PARTS[1]}
-          PATCH=${VERSION_PARTS[2]}
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          # Extract version parts (e.g., v0.0.0 -> 0.0.0)
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${LATEST_TAG#v}"
           # Check if the commit is already tagged
           if git tag --contains HEAD | grep -q .; then
             # Use the latest tag containing the commit
@@ -97,7 +94,7 @@ jobs:
       - name: Check if image exists
         id: check-image
         run: |
-          IMAGE_TAG=ghcr.io/${{ github.repository }}/friar-tuck-service-example:${{ steps.get-version.outputs.VERSION }}
+          IMAGE_TAG=ghcr.io/${{ github.repository }}/friar-tuck-service-example:${{ steps.tag-version.outputs.VERSION }}
           if docker manifest inspect $IMAGE_TAG > /dev/null 2>&1; then
             echo "Image exists, skipping push"
             echo "skip_push=true" >> $GITHUB_OUTPUT
@@ -109,5 +106,5 @@ jobs:
       - name: Build and push Docker image
         if: steps.check-image.outputs.skip_push == 'false'
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/friar-tuck-service-example:${{ steps.get-version.outputs.VERSION }} .
-          docker push ghcr.io/${{ github.repository }}/friar-tuck-service-example:${{ steps.get-version.outputs.VERSION }}
+          docker build -t ghcr.io/${{ github.repository }}/friar-tuck-service-example:${{ steps.tag-version.outputs.VERSION }} .
+          docker push ghcr.io/${{ github.repository }}/friar-tuck-service-example:${{ steps.tag-version.outputs.VERSION }}
