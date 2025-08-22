@@ -1,6 +1,7 @@
 import subprocess
 import sys
 import argparse
+import os
 
 def get_latest_tag():
     try:
@@ -26,21 +27,23 @@ def increment_patch(version):
 
 def get_version(update_tags=False):
     latest_tag = get_latest_tag()
-    if is_commit_tagged():
-        tags = subprocess.run(['git', 'tag', '--contains', 'HEAD'], capture_output=True, text=True, check=True).stdout.strip().split('\n')
-        version = max(tags, key=lambda x: [int(y) for y in x.replace('v', '').split('.')]) if tags else latest_tag
-        # print(f"Current tag: {version}")
-    else:
-        new_version = increment_patch(latest_tag)
-        if [int(x) for x in new_version.replace('v', '').split('.')] <= [int(x) for x in latest_tag.replace('v', '').split('.')]:
-            raise ValueError(f"Calculated version {new_version} is lower than or equal to latest tag {latest_tag}")
-        # print(f"Current tag: {latest_tag}, Next tag: {new_version}")
-        if update_tags:
-            # print(f"Creating new tag: {new_version}")
-            subprocess.run(['git', 'tag', new_version], check=True)
-            subprocess.run(['git', 'push', 'origin', new_version], check=True)
-        version = new_version if not is_commit_tagged() else latest_tag
-    return version
+
+    with open(os.devnull, 'w') as devnull:
+        if is_commit_tagged():
+            tags = subprocess.run(['git', 'tag', '--contains', 'HEAD'], capture_output=True, text=True, check=True, stdout=devnull, stderr=devnull).stdout.strip().split('\n')
+            version = max(tags, key=lambda x: [int(y) for y in x.replace('v', '').split('.')]) if tags else latest_tag
+            # print(f"Current tag: {version}")
+        else:
+            new_version = increment_patch(latest_tag)
+            if [int(x) for x in new_version.replace('v', '').split('.')] <= [int(x) for x in latest_tag.replace('v', '').split('.')]:
+                raise ValueError(f"Calculated version {new_version} is lower than or equal to latest tag {latest_tag}")
+            # print(f"Current tag: {latest_tag}, Next tag: {new_version}")
+            if update_tags:
+                # print(f"Creating new tag: {new_version}")
+                subprocess.run(['git', 'tag', new_version], check=True, stdout=devnull, stderr=devnull)
+                subprocess.run(['git', 'push', 'origin', new_version], check=True, stdout=devnull, stderr=devnull)
+            version = new_version if not is_commit_tagged() else latest_tag
+        return version
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Manage version tags for the project.")
