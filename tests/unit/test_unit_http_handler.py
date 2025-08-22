@@ -20,5 +20,5 @@ class TestHttpHandlerUnit:
     def test_info(self):
         # Test the fail endpoint
         response = Response()
-        result = info()
+        result = info(response)
         assert result == {"info": "service-example"}
