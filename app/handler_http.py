@@ -12,3 +12,8 @@ def root():
 def fail(response: Response):
     response.status_code = status.HTTP_400_BAD_REQUEST
     return {"message": "Failure"}
+
+
+@app.get("/info")
+def info(response: Response):
+    return {"info": "service-example"}
