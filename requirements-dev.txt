@@ -7,4 +7,6 @@ mangum
 moto
 pytest
 pytest-asyncio
+pytest-cov
+pytest-order
 uvicorn[standard]
