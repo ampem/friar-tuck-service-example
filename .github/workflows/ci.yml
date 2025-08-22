@@ -64,7 +64,7 @@ jobs:
 
       - name: Determine and create new version tag
         id: tag-version
-        run: python version_manager.py --update-tags
+        run: python util/version_manager.py --update-tags
 
       - name: Check if image exists
         id: check-image
