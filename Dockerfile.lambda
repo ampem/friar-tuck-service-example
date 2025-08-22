@@ -1,0 +1,11 @@
+FROM public.ecr.aws/lambda/python:3.12
+
+# Copy your code into the image
+COPY app/ ${LAMBDA_TASK_ROOT}
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
+
+# Default handler, can be overridden per Lambda
+CMD [ "app.handler" ]

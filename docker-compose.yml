@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  fastapi-service:
+    build: .
+    ports:
+      - "8000:8000"
+
+  fastapi-lambda:
+    build:
+      context: .
+      dockerfile: Dockerfile.lambda
+    ports:
+      - "9000:8080"
