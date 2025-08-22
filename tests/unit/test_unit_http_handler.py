@@ -1,6 +1,6 @@
 import pytest
 from fastapi import Response, status
-from app.handler_http import root, fail, info
+from app.handler_http import root, fail
 
 
 @pytest.mark.unit
