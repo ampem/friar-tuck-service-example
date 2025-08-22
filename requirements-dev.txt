@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+mangum
+pytest
+httpx
+pytest-asyncio
+black
+isort

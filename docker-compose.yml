@@ -1,14 +1,23 @@
-version: "3.9"
-
 services:
-  fastapi-service:
-    build: .
+  fastapi-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     ports:
       - "8000:8000"
+
+  fastapi-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8001"
+    profiles: ["fastapi-service"]
 
   fastapi-lambda:
     build:
       context: .
       dockerfile: Dockerfile.lambda
     ports:
-      - "9000:8080"
+      - "9000:8002"
+    profiles: ["fastapi-lambda"]
