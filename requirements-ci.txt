@@ -1,0 +1,12 @@
+black
+boto3
+fastapi
+httpx
+isort
+mangum
+moto
+pytest
+pytest-asyncio
+pytest-cov
+pytest-order
+uvicorn[standard]
