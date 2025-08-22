@@ -6,8 +6,6 @@ COPY app/ ${LAMBDA_TASK_ROOT}
 # Install dependencies
 COPY requirements.txt .
 
-ENV PYTHONPATH=/app
-
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
 
