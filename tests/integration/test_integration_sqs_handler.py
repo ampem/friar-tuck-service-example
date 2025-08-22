@@ -1,6 +1,7 @@
 import pytest
 import boto3
 import json
+from unittest.mock import patch
 from moto import mock_aws
 from app.handler_sqs import handler
 
@@ -14,16 +15,16 @@ def sqs_sns_setup():
         queue = sqs.create_queue(QueueName="test-queue")
         queue_url = queue["QueueUrl"]
         
-        # Subscribe SQS queue to SNS topic
+        # Get SQS queue ARN
+        queue_attrs = sqs.get_queue_attributes(QueueUrl=queue_url, AttributeNames=["QueueArn"])
+        queue_arn = queue_attrs["Attributes"]["QueueArn"]
+        
+        # Subscribe SQS queue to SNS topic using queue ARN
         sns.subscribe(
             TopicArn=topic["TopicArn"],
             Protocol="sqs",
-            Endpoint=queue_url
+            Endpoint=queue_arn
         )
-        
-        # Get queue attributes to set permissions
-        queue_attrs = sqs.get_queue_attributes(QueueUrl=queue_url, AttributeNames=["QueueArn"])
-        queue_arn = queue_attrs["Attributes"]["QueueArn"]
         
         # Set SQS policy to allow SNS to send messages
         policy = {
