@@ -1,5 +1,6 @@
 import json
 
+
 def handler(event, context):
     for record in event["Records"]:
         message = record["Sns"]["Message"]
