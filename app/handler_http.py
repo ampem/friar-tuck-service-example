@@ -16,4 +16,4 @@ def fail(response: Response):
 
 @app.get("/info")
 def info(response: Response):
-    return {"info": "x"}
+    return {"info": "service-example"}
