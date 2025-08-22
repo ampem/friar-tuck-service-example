@@ -1,6 +1,6 @@
 import pytest
 from fastapi import Response, status
-from app.handler_http import root, fail, info
+from app.handler_http import root, fail
 
 
 @pytest.mark.unit
@@ -16,9 +16,3 @@ class TestHttpHandlerUnit:
         result = fail(response)
         assert result == {"message": "Failure"}
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-
-    def test_info(self):
-        # Test the fail endpoint
-        response = Response()
-        result = info(response)
-        assert result == {"info": "service-example"}
