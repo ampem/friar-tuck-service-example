@@ -1,8 +1,10 @@
-fastapi
-uvicorn[standard]
-mangum
-pytest
-httpx
-pytest-asyncio
 black
+boto3
+fastapi
+httpx
 isort
+mangum
+moto
+pytest
+pytest-asyncio
+uvicorn[standard]
