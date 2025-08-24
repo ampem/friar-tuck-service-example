@@ -5,8 +5,8 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
+    # Removed branches: - main to allow all pull requests to main
+    # Validation will be filtered by the job condition
 
 jobs:
   validate:
