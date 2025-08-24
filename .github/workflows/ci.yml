@@ -26,7 +26,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r requirements-ci.txt
 
       - name: Validate conventional commits
         uses: amannn/action-semantic-pull-request@v5
@@ -63,7 +63,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r requirements-ci.txt
 
       - name: Run unit tests
         run: pytest tests/unit/ -v --cov=app --cov-report=term
