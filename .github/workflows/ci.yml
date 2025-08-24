@@ -79,7 +79,7 @@ jobs:
           retention-days: 7
 
       - name: Semantic Release
-        run: semantic-release publish
+        run: semantic-release publish --github-token ${{ secrets.GITHUB_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
