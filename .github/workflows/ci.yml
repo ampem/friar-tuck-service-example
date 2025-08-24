@@ -81,7 +81,7 @@ jobs:
       - name: Semantic Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: semantic-release publish
+        run: semantic-release version
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
