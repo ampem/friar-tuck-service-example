@@ -1,0 +1,7 @@
+[tool.semantic_release]
+version_source = "tag"
+commit_parser = "conventional"
+branch = "main"
+changelog_file = "CHANGELOG.md"
+upload_to_pypi = false
+upload_to_release = false

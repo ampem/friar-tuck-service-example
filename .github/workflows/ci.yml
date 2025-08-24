@@ -79,9 +79,9 @@ jobs:
           retention-days: 7
 
       - name: Semantic Release
-        run: semantic-release publish --github-token ${{ secrets.GITHUB_TOKEN }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: semantic-release publish
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
