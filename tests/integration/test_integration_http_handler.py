@@ -18,4 +18,4 @@ class TestHttpHandlerIntegration:
     async def test_fail_endpoint(self, client):
         response = client.get("/fail")
         assert response.status_code == 400
-        assert response.json() == {"message": "Failure"}
+        assert response.json() == {"message": "failure"}

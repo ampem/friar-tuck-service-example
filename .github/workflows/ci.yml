@@ -5,13 +5,13 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
+    # Removed branches: - main to allow all pull requests to main
+    # Validation will be filtered by the job condition
 
 jobs:
   validate:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.base_ref == 'refs/heads/main' && github.head_ref != 'refs/heads/main'
+    if: github.event_name == 'pull_request' && github.base_ref == 'main' && github.head_ref != 'refs/heads/main'
 
     steps:
       - name: Checkout code

@@ -14,5 +14,5 @@ class TestHttpHandlerUnit:
         # Test the fail endpoint
         response = Response()
         result = fail(response)
-        assert result == {"message": "Failure"}
+        assert result == {"message": "failure"}
         assert response.status_code == status.HTTP_400_BAD_REQUEST
